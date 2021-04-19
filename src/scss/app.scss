@@ -1,0 +1,123 @@
+@import './variables.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.plus-sign {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  transition: all .4s ease;
+  &:hover {
+    fill: darkgreen;
+  }
+}
+.minus-sign {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  transition: all .4s ease;
+  &:hover {
+    fill: tomato;
+  }
+}
+.app {
+  height: 100vh;
+  max-height: 100vh;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  height: $header-height;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #9DC3FD;
+  font-size: 2.4em;
+}
+.main {
+  margin-top: $header-height;
+  padding-top: 20px;
+  flex-grow: 1;
+}
+.wrapper {
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.start-form {
+  display: flex;
+  padding: 0 20px 50px 20px;
+  max-width: 1100px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  input {
+    padding: 10px 5px;
+    font-size: 1.2em;
+    border: none;
+    outline: none;
+    border: 1px solid darkolivegreen;
+    border-radius: 5px;
+  }
+  input:placeholder-shown {
+    border: 1px solid tomato;
+  }
+  &__attribute {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    &:first-child {
+      margin-left: 30px;
+    }
+    .minus-sign {
+      margin-right: 5px;
+    }
+  }
+  &__attributes {
+    margin-right: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 99px;
+  }
+  &__values {
+    display: flex;
+    flex: 1;
+    .plus-sign {
+      margin-left: 15px;
+    }
+  }
+  &__value-col {
+    padding: 0 5px;
+    &:first-child {
+      margin-top: 30px;
+    }
+  }
+  &__value-header {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .minus-sign{
+      margin-bottom: 5px;
+    } 
+  }
+  &__value-body {
+    display: flex;
+    flex-direction: column;
+    input {
+      margin-bottom: 15px;
+    }
+  }
+}
