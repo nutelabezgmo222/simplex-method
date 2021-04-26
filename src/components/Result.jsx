@@ -11,10 +11,11 @@ function Result({ resultSet = {}, values = [] }) {
         <ul className="result__list">
           {
             resultSet.variables &&
-            resultSet.variables.map((variable) => {
+            resultSet.variables.map((variable, i) => {
               if (typeof variable.name === 'number') {
-                return <li>{values[variable.name].title} : {Math.floor(variable.value)}</li>
+                return <li key={i}>{values[variable.name].title} : {Math.floor(variable.value)}</li>
               }
+              return '';
             })
           }
         </ul>
