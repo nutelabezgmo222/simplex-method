@@ -1,16 +1,12 @@
 import React from 'react'
+import { checkForNumber } from '../features/features.js';
+import { inputTypes } from '../constants';
 
-function InputForm({ products, inputTypes, onRowAdd = f => f,
+
+function InputForm({ products, onRowAdd = f => f,
   onColumnAdd = f => f, onInputBlur = f => f, onRowRemove=f=>f, onColumnRemove=f=>f }) {
   const { attributes, values } = products;
   
-  const checkForNumber = (e) => {
-    let str = e.target.value;
-    if (isNaN(str[str.length - 1])) {
-      str = str.slice(0, str.length - 1);
-      e.target.value = str;
-    }
-  }
   return (
     <form className="start-form">
       <div className="start-form__attributes">
@@ -32,7 +28,7 @@ function InputForm({ products, inputTypes, onRowAdd = f => f,
                 <input
                   key={attr.id}
                   onBlur={(e)=>onInputBlur(e, attr.id, inputTypes.ATTRIBUTE)}
-                  type="text" defaultValue={attr.value}
+                  type="text" defaultValue={attr.title}
                   placeholder="Введіть назву атрибута" />
               </div>)
           })
