@@ -143,6 +143,7 @@ export default class Simplex extends SimplexData {
     this.leadingRowIndex = minIndex;
   }
   setLastCol() {
+    this.lastCol = [];
     for (let i = 0; i < this.basisValues.length - 1; i++) {
       let colValue;
       if (this.coefMatrix[i][this.leadingColIndex] < 0) {
@@ -155,6 +156,7 @@ export default class Simplex extends SimplexData {
     }
   }
   setLeadingElement() {
+    console.log(this.lastCol);
     this.leadingElement = this.coefMatrix[this.leadingRowIndex][
       this.leadingColIndex
     ];
