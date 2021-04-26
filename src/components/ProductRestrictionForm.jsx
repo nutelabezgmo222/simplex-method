@@ -5,7 +5,7 @@ function ProductRestrictionForm({ products = [], prodRestriction = [],
   onProdRestAdd = f => f, onProdRestChange=f=>f, onProdRestRemove=f=>f}) {
   return (
     <div className="prod-rest">
-      <p className="prod-rest__title">Задайте тут обмеження на виробництво</p>
+      <p className="prod-rest__title">Задайте тут обмеження на виробництво(не працює)</p>
       <div className="prod-rest__restriction-list">
          {
           prodRestriction.map((rest) => 
