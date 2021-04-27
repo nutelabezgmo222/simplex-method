@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Result({ resultSet = {}, values = [] }) {
-  console.log(resultSet, values);
   return (
     <div className="result">
       <h3>Результат</h3>

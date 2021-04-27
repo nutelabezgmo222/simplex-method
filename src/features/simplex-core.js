@@ -71,8 +71,6 @@ export default class Simplex extends SimplexData {
     this.initSimplexTable();
     while (!this.isFunctionOptimal()) {
       this.findOptimal();
-      this.toString();
-      console.log('----------------')
     }
   }
   
@@ -144,7 +142,7 @@ export default class Simplex extends SimplexData {
   }
   setLastCol() {
     this.lastCol = [];
-    for (let i = 0; i < this.basisValues.length - 1; i++) {
+    for (let i = 0; i < this.basisValues.length; i++) {
       let colValue;
       if (this.coefMatrix[i][this.leadingColIndex] < 0) {
         colValue = null;
@@ -156,7 +154,6 @@ export default class Simplex extends SimplexData {
     }
   }
   setLeadingElement() {
-    console.log(this.lastCol);
     this.leadingElement = this.coefMatrix[this.leadingRowIndex][
       this.leadingColIndex
     ];
