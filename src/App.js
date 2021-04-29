@@ -170,10 +170,8 @@ function App() {
     const simplex = new Simplex(prodObject, prodRestriction);
     setResult({
       variables: simplex.getResult(),
-      finalValue: simplex.getGoalValue(),
     });
   }
-
   return (
     <div className="app">
       <Header></Header>
@@ -203,8 +201,9 @@ function App() {
             Рохрахувати
           </button>
         </div>
-        {result && 
-          <Result resultSet={result} values={prodObject.values}/>
+        {
+          result &&
+          <Result resultSet={result} values={prodObject.values} attributes={prodObject.attributes}/>
         }
       </Main>
     </div>

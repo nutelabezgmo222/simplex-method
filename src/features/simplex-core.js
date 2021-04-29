@@ -65,12 +65,14 @@ export default class Simplex extends SimplexData {
   leadingRowIndex = 0; // current decision leading row
   leadingElement = 0; // current leading element (crossing of leading col and row)
   lastCol = [];
-
+  itarationCount = 0;
   constructor(object, prodRest = null) {
     super(object, prodRest);
+    this.iterationCount = 0;
     this.initSimplexTable();
     while (!this.isFunctionOptimal()) {
       this.findOptimal();
+      this.iterationCount++;
     }
   }
   
@@ -134,7 +136,7 @@ export default class Simplex extends SimplexData {
   findLeadingRow() {
     let minIndex = 0;
     for (let i = 1; i < this.lastCol.length; i++) {
-      if (this.lastCol[minIndex] > this.lastCol[i]) {
+      if (this.lastCol[minIndex] > this.lastCol[i] || this.lastCol[minIndex] === null) {
         minIndex = i;
       }
     }
@@ -144,7 +146,7 @@ export default class Simplex extends SimplexData {
     this.lastCol = [];
     for (let i = 0; i < this.basisValues.length; i++) {
       let colValue;
-      if (this.coefMatrix[i][this.leadingColIndex] < 0) {
+      if (this.coefMatrix[i][this.leadingColIndex] <= 0) {
         colValue = null;
       } else {
         colValue =
@@ -221,16 +223,24 @@ export default class Simplex extends SimplexData {
     this.setLeadingElement();
   }
   getResult() {
-    return this.basisValues;
-  }
-  getGoalValue() {
-    return this.currentGoalValue;
+    const newBasisValues = this.basisValues.map((val) => {
+      let newValue = val.value.toFixed(3);
+      if (newValue.toString().slice(-3) === "999") {
+        newValue = Math.round(newValue);
+      } else {
+        newValue = Math.floor(newValue);
+      }
+      return {
+        ...val,
+        value: newValue,
+      };
+    });
+    return newBasisValues;
   }
   toString() {
-    console.log('basis: ', this.basisValues);
-    console.log('Matrix: ', this.coefMatrix);
-    console.log('goalValue: ', this.currentGoalValue);
-    console.log('indexRow: ', this.indexRow)
+    console.log(this.lastCol);
+    console.log("indexRow:", this.indexRow);
+    console.log("leadingElement:", this.leadingElement);
   }
 
 }
