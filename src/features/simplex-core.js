@@ -70,7 +70,7 @@ export default class Simplex extends SimplexData {
     super(object, prodRest);
     this.iterationCount = 0;
     this.initSimplexTable();
-    while (!this.isFunctionOptimal()) {
+    while (!this.isFunctionOptimal() && (this.iterationCount < 10)) {
       this.findOptimal();
       this.iterationCount++;
     }
@@ -118,6 +118,7 @@ export default class Simplex extends SimplexData {
   }
 
   isFunctionOptimal() {
+    this.toString();
     let negativeIndex = this.indexRow.findIndex((item) => item < 0);
     if (negativeIndex !== -1) {
       return false;
@@ -134,13 +135,27 @@ export default class Simplex extends SimplexData {
     this.leadingColIndex = minIndex;
   }
   findLeadingRow() {
-    let minIndex = 0;
-    for (let i = 1; i < this.lastCol.length; i++) {
-      if (this.lastCol[minIndex] > this.lastCol[i] || this.lastCol[minIndex] === null) {
-        minIndex = i;
+    try {
+      let minElementId = null;
+      for (let i = 0; i < this.lastCol.length; i++) {
+        if (this.lastCol[i] !== null) {
+          minElementId = i;
+          break;
+        } 
       }
+      if (minElementId === null) {
+        throw new Error("all basis is null");
+      }
+      for (let i = 0; i < this.lastCol.length; i++) {
+        if (this.lastCol[i] !== null && this.lastCol[i] < this.lastCol[minElementId]) {
+          minElementId = i;
+        }
+      }
+      this.leadingRowIndex = minElementId;
+    } catch (e) {
+      console.error(e.message);
+      this.leadingRowIndex = undefined;
     }
-    this.leadingRowIndex = minIndex;
   }
   setLastCol() {
     this.lastCol = [];
@@ -151,6 +166,7 @@ export default class Simplex extends SimplexData {
       } else {
         colValue =
           this.basisValues[i].value / this.coefMatrix[i][this.leadingColIndex];
+        colValue = this.roundValue(colValue)
       }
       this.lastCol.push(colValue);
     }
@@ -164,18 +180,21 @@ export default class Simplex extends SimplexData {
     //calculate new basis
     const newBasis = this.basisValues.map((val, i) => {
       if (i === this.leadingRowIndex) {
+        let newVal = val.value / this.leadingElement;
+        newVal = this.roundValue(newVal);
         return {
           name: this.leadingColIndex,
-          value: val.value / this.leadingElement,
+          value: newVal,
         };
       } else {
-        const newValue = val.value -
+        let newVal = val.value -
           this.basisValues[this.leadingRowIndex].value *
           this.coefMatrix[i][this.leadingColIndex] /
           this.leadingElement;
+        newVal = this.roundValue(newVal);
         return {
           ...val,
-          value: newValue,
+          value: newVal,
         };
       }
     });
@@ -189,11 +208,12 @@ export default class Simplex extends SimplexData {
 
     //calculate indexRow
     const newIndexRow = this.indexRow.map((item, i) => {
-      const newItem = item -
+      let newVal = item -
         this.coefMatrix[this.leadingRowIndex][i] *
         this.indexRow[this.leadingColIndex] /
-        this.leadingElement
-      return newItem;
+        this.leadingElement;
+      newVal = this.roundValue(newVal);
+      return newVal;
     })
     this.indexRow = newIndexRow;
     
@@ -202,13 +222,16 @@ export default class Simplex extends SimplexData {
     const newMatrix = this.coefMatrix.map((row, i) => {
       const newRow = row.map((coef, j) => {
         if (i === this.leadingRowIndex) {
-          return coef / this.leadingElement;
+          let newVal = coef / this.leadingElement;
+          newVal = this.roundValue(newVal);
+          return newVal;
         }
-        const newValue = coef -
+        let newVal = coef -
           this.coefMatrix[this.leadingRowIndex][j] *
           this.coefMatrix[i][this.leadingColIndex] /
           this.leadingElement;
-        return newValue;
+        newVal = this.roundValue(newVal);
+        return newVal;
       })
       return newRow;
     })
@@ -239,8 +262,12 @@ export default class Simplex extends SimplexData {
   }
   toString() {
     console.log(this.lastCol);
+    console.log('matrix:', this.coefMatrix);
     console.log("indexRow:", this.indexRow);
     console.log("leadingElement:", this.leadingElement);
   }
-
+  roundValue(value) {
+    let roundedValue = +value;
+    return roundedValue;
+  }
 }
