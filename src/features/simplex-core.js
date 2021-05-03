@@ -141,7 +141,6 @@ export default class Simplex extends SimplexData {
   }
 
   isFunctionOptimal() {
-    this.toString();
     let negativeIndex = this.indexRow.findIndex((item) => item < 0);
     if (negativeIndex !== -1) {
       return false;
