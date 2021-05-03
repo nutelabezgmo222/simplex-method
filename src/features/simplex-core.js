@@ -8,16 +8,20 @@ class SimplexData {
   way = true; // true -> max; false -> min
 
   constructor(object, prodRest = null) {
-    this.setRestrictionNumber(object.attributes);
+    this.setRestrictionNumber(object.attributes, prodRest);
     this.setVariablesNumber(object.values);
     this.setGoalFunction(object.values);
     this.setWayOfFunction(true);
-    this.setRestrictionSystem(object.attributes, object.values);
+    this.setRestrictionSystem(object.attributes, object.values, prodRest);
     this.setSigns(object.attributes);
-    this.setFreeVariables(object.attributes);
+    this.setFreeVariables(object.attributes, prodRest);
   }
-  setRestrictionNumber(attributes) {
-    this.numRest = attributes.length - 1;
+  setRestrictionNumber(attributes, prodRest = null) {
+    let numberOfRestrictions = attributes.length - 1;
+    if (prodRest !== null) {
+      numberOfRestrictions += prodRest.length;
+    }
+    this.numRest = numberOfRestrictions;
   }
   setVariablesNumber(values) {
     this.numVar = values.length;
@@ -28,8 +32,9 @@ class SimplexData {
   setWayOfFunction(way) {
     this.way = way;
   }
-  setRestrictionSystem(attributes, values) {
-    this.coefRestSystem = attributes.reduce((arr, attr) => {
+  setRestrictionSystem(attributes, values, prodRest = null) {
+    let prodRestArr, coefArr;
+    coefArr = attributes.reduce((arr, attr) => {
       if (attr.id === 0) return arr;
       const newRow = values.map((val) => {
         return val.prodValues.filter((prodVal) => {
@@ -39,6 +44,16 @@ class SimplexData {
       arr.push(newRow);
       return arr;
     }, []);
+    if (prodRest !== null) {
+      prodRestArr = prodRest.map((rest) => {
+        const newRow = values.map((val) => {
+          return val.id.toString() === rest.prodId.toString() ? 1 : 0;
+        });
+        return newRow;
+      });
+      coefArr = coefArr.concat(prodRestArr);
+    }
+    this.coefRestSystem = coefArr;
   }
   setSigns(attributes) {
     this.signs = attributes.reduce((arr, attr) => {
@@ -47,12 +62,20 @@ class SimplexData {
       return arr;
     }, []);
   }
-  setFreeVariables(attributes) {
-    this.freeVariables = attributes.reduce((arr, attr) => {
+  setFreeVariables(attributes, prodRest = null) {
+    let freeVariablesArr, prodRestVariables;
+    freeVariablesArr = attributes.reduce((arr, attr) => {
       if (attr.id === 0) return arr;
       arr.push(attr.restriction);
       return arr;
     }, []);
+    if (prodRest !== null) {
+      prodRestVariables = prodRest.map((rest) => {
+        return rest.restriction;
+      })
+      freeVariablesArr = freeVariablesArr.concat(prodRestVariables);
+    }
+    this.freeVariables = freeVariablesArr;
   }
 }
 
@@ -247,7 +270,7 @@ export default class Simplex extends SimplexData {
   }
   getResult() {
     const newBasisValues = this.basisValues.map((val) => {
-      let newValue = val.value.toFixed(3);
+      let newValue = parseFloat(val.value).toFixed(3);
       if (newValue.toString().slice(-3) === "999") {
         newValue = Math.round(newValue);
       } else {

@@ -5,7 +5,7 @@ function ProductRestrictionForm({ products = [], prodRestriction = [],
   onProdRestAdd = f => f, onProdRestChange=f=>f, onProdRestRemove=f=>f}) {
   return (
     <div className="prod-rest">
-      <p className="prod-rest__title">Задайте тут обмеження на виробництво(не працює)</p>
+      <p className="prod-rest__title">Задайте тут обмеження на виробництво</p>
       <div className="prod-rest__restriction-list">
          {
           prodRestriction.map((rest) => 
@@ -26,7 +26,7 @@ function ProductRestrictionForm({ products = [], prodRestriction = [],
               </select>
               <input
                 type="text"
-                name="value"
+                name="restriction"
                 defaultValue={rest.value}
                 onBlur={(e) => onProdRestChange(e, rest.id)} />
               <svg

@@ -145,9 +145,9 @@ function App() {
       ...prodRestriction,
       {
         id: (Math.random() * 1e18).toString(26),
-        prodId: '',
+        prodId: 0,
         sign: 0,
-        value: ''
+        restriction: ''
       }
     ])
   }
@@ -203,7 +203,11 @@ function App() {
         </div>
         {
           result &&
-          <Result resultSet={result} values={prodObject.values} attributes={prodObject.attributes}/>
+          <Result
+            resultSet={result}
+            values={prodObject.values}
+            attributes={prodObject.attributes}
+          />
         }
       </Main>
     </div>

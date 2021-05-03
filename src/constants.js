@@ -26,18 +26,26 @@ export const inputTypes = {
 
 export const signs = [
   {
-    value: 1,
-    sign: ">=",
-    MORE_EQUALS: "more_equals",
-  },
-  {
-    value: 0,
-    sign: "=",
-    EQUALS: "equals",
-  },
-  {
     value: -1,
     sign: "<=",
     LESS_EQUALS: "less_equals",
   },
 ];
+
+// const signs = [
+//   {
+//     value: 1,
+//     sign: ">=",
+//     MORE_EQUALS: "more_equals",
+//   },
+//   {
+//     value: 0,
+//     sign: "=",
+//     EQUALS: "equals",
+//   },
+//   {
+//     value: -1,
+//     sign: "<=",
+//     LESS_EQUALS: "less_equals",
+//   },
+// ];
