@@ -119,7 +119,24 @@ export default class Transport extends TransportData {
     this.currentPlan = this.startPlan;
     this.countPotential();
     this.countPseudoTarriffs();
+    let logPlan = this.currentPlan.map(planRow => {
+      let row = planRow.map(obj => obj);
+      return row;
+    })
+    let logPotentials = {
+      provider: this.providerPotential.slice(),
+      consumer: this.consumerPotential.slice()
+    }
+    let logPseudoTarriffs = this.pseudoTarriffs.slice();
+    this.countGoalFunction();
+    let logGoalFunction = this.currentGoalFunction;
 
+    this.logArray.push({
+      logPlan,
+      logPotentials,
+      logPseudoTarriffs,
+      logGoalFunction,
+    });
     while (!this.isPlanOptimal) {
       this.currentCycle = new TransportCycle(this.pseudoTarriffs, this.currentPlan, this.wayWeights);
       if (this.currentCycle.isNegativeExist) {
@@ -129,12 +146,28 @@ export default class Transport extends TransportData {
         this.madeNewPlan();
         this.countPotential();
         this.countPseudoTarriffs();
+
+        let logPlan = this.currentPlan.map((planRow) => {
+          let row = planRow.map((obj) => obj);
+          return row;
+        });
+        let logPotentials = {
+          provider: this.providerPotential.slice(),
+          consumer: this.consumerPotential.slice(),
+        };
+        let logPseudoTarriffs = this.pseudoTarriffs.slice();
+        this.countGoalFunction();
+        let logGoalFunction = this.currentGoalFunction;
+        this.logArray.push({
+          logPlan,
+          logPotentials,
+          logPseudoTarriffs,
+          logGoalFunction,
+        });
       } else {
         this.isPlanOptimal = true;
       }
     }
-
-    console.log(this.currentPlan);
 
   }
   countPseudoTarriffs() {

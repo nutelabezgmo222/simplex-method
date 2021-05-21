@@ -216,3 +216,16 @@
     list-style: none;
   }
 }
+
+.transport-resulst {
+  font-size: 14px;
+  table {
+    border-collapse: collapse;
+  }
+  table,tr,td {
+    border: 1px solid #000;
+  }
+  td {
+    padding: 10px 20px;
+  }
+}

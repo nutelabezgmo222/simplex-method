@@ -7,6 +7,7 @@ import {
   AttributesResctrictionForm,
   ProductRestrictionForm,
   Result,
+  TransportResults,
 } from "./components";
 import { inputTypes, products, transport } from './constants';
 import { Switch, Route, useLocation } from 'react-router-dom';
@@ -17,6 +18,7 @@ function App() {
   const [prodObject, setProdObject] = React.useState({});
   const [prodRestriction, setProdRestriction] = React.useState([]);
   const [result, setResult] = React.useState(null);
+  const [transportResults, setTransportResults] = React.useState(null);
   const location = useLocation();
 
   React.useEffect(() => {
@@ -190,7 +192,7 @@ function App() {
   }
   const handleTransportCalc = () => {
     const transport = new Transport(prodObject);
-    console.log(transport.logArray);
+    setTransportResults(transport.logArray);
   }
   return (
     <div className="app">
@@ -216,6 +218,10 @@ function App() {
                 Рохрахувати
               </button>
             </div>
+            {
+              transportResults &&
+              <TransportResults prod={prodObject} results={transportResults}></TransportResults>
+            }
           </Route>
           <Route path="/">
             <ProductRestrictionForm
