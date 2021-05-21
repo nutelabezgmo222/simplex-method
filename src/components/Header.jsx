@@ -1,9 +1,14 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 
 function Header() {
   return (
     <header className="header">
-      Вирішуй задачі по максимізації прибутку онлайн!
+      <div className="header__links">
+        <NavLink activeClassName="selected" to="/transport">Транспортна</NavLink>
+        <NavLink activeClassName="selected" to="/" exact>Сімплексна</NavLink>
+      </div>
+      <p className="header__title">Вирішуй задачі по максимізації прибутку онлайн!</p>
       <small style={{fontSize:'10px'}}>by Maksym Solodovnykov</small>
     </header>
   )

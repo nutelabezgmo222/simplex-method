@@ -93,7 +93,7 @@ export default class Simplex extends SimplexData {
     super(object, prodRest);
     this.iterationCount = 0;
     this.initSimplexTable();
-    while (!this.isFunctionOptimal() && (this.iterationCount < 10)) {
+    while (!this.isFunctionOptimal() && (this.iterationCount < 30)) {
       this.findOptimal();
       this.iterationCount++;
     }

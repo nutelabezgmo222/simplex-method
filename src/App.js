@@ -8,14 +8,30 @@ import {
   ProductRestrictionForm,
   Result,
 } from "./components";
-import { inputTypes, products } from './constants';
+import { inputTypes, products, transport } from './constants';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import Simplex from './features/simplex-core.js';
+import Transport from "./features/transport-core.js";
 
 function App() {
-  const [prodObject, setProdObject] = React.useState(products);
+  const [prodObject, setProdObject] = React.useState({});
   const [prodRestriction, setProdRestriction] = React.useState([]);
   const [result, setResult] = React.useState(null);
+  const location = useLocation();
 
+  React.useEffect(() => {
+    switch (location.pathname) {
+      case "/": {
+        setProdObject(products);
+        break;
+      }
+      case "/transport": {
+        setProdObject(transport);
+        break;
+      }
+    }
+  }, [location.pathname]);
+  
   const onInputBlur = (e, id = 0, type = "", prodId = 0) => {
     switch (type) {
       case inputTypes.ATTRIBUTE: {
@@ -172,6 +188,10 @@ function App() {
       variables: simplex.getResult(),
     });
   }
+  const handleTransportCalc = () => {
+    const transport = new Transport(prodObject);
+    console.log(transport.logArray);
+  }
   return (
     <div className="app">
       <Header></Header>
@@ -189,26 +209,36 @@ function App() {
           attributes={prodObject.attributes}
           onInputBlur={onInputBlur}
         />
-        <ProductRestrictionForm
-          products={prodObject.values}
-          prodRestriction={prodRestriction}
-          onProdRestAdd={onProdRestAdd}
-          onProdRestChange={handleProdRestChange}
-          onProdRestRemove={handleProdRestRemove}
-        />
-        <div className="button-box">
-          <button onClick={handleSimplexCalc} className="main-button">
-            Рохрахувати
-          </button>
-        </div>
-        {
-          result &&
-          <Result
-            resultSet={result}
-            values={prodObject.values}
-            attributes={prodObject.attributes}
-          />
-        }
+        <Switch>
+          <Route path="/transport" exact>
+            <div className="button-box">
+              <button onClick={handleTransportCalc} className="main-button">
+                Рохрахувати
+              </button>
+            </div>
+          </Route>
+          <Route path="/">
+            <ProductRestrictionForm
+              products={prodObject.values}
+              prodRestriction={prodRestriction}
+              onProdRestAdd={onProdRestAdd}
+              onProdRestChange={handleProdRestChange}
+              onProdRestRemove={handleProdRestRemove}
+            />
+            <div className="button-box">
+              <button onClick={handleSimplexCalc} className="main-button">
+                Рохрахувати
+              </button>
+            </div>
+            {result && (
+              <Result
+                resultSet={result}
+                values={prodObject.values}
+                attributes={prodObject.attributes}
+              />
+            )}
+          </Route>
+        </Switch>
       </Main>
     </div>
   );

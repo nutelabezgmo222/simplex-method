@@ -34,13 +34,31 @@
   height: $header-height;
   position: fixed;
   display: flex;
-  justify-content: center;
   align-items: center;
   left: 0;
   right: 0;
   top: 0;
   background-color: #9DC3FD;
   font-size: 2.4em;
+  &__title {
+    flex-grow: 1;
+    text-align: center;
+  }
+  &__links {
+    a {
+      font-size: 16px;
+      margin-left: 15px;
+      text-decoration: none;
+      padding: 10px;
+      border: 2px solid black;
+      color: black;
+      background-color: #fff;
+      &.selected {
+        background-color: tomato;
+        border-color: black;
+      }
+    }
+  }
 }
 .main {
   margin-top: $header-height;

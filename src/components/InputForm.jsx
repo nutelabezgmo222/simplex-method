@@ -1,12 +1,29 @@
 import React from 'react'
 import { checkForNumber } from '../features/features.js';
 import { inputTypes } from '../constants';
+import { useLocation } from 'react-router-dom';
 
+let inputField = {
+  "/": {
+    rowsFirst: "Прибуток",
+    rowsMain: "Введіть назву атрибуту",
+    colsMain: "Введіть назву товару",
+    intersection: "Введіть кількість"
+  },
+  "/transport": {
+    rowsFirst: "",
+    rowsMain: "Введіть назву споживача",
+    colsMain: "Введіть назву заводу",
+    intersection: "Введіть вартість шляху"
+  }
+  
+}
 
 function InputForm({ products, onRowAdd = f => f,
   onColumnAdd = f => f, onInputBlur = f => f, onRowRemove=f=>f, onColumnRemove=f=>f }) {
   const { attributes, values } = products;
-  
+  let location = useLocation();
+
   return (
     <form className="start-form">
       <div className="start-form__attributes">
@@ -27,9 +44,9 @@ function InputForm({ products, onRowAdd = f => f,
                   }
                 <input
                   key={attr.id}
-                  onBlur={(e)=>onInputBlur(e, attr.id, inputTypes.ATTRIBUTE)}
+                  onBlur={(e) => onInputBlur(e, attr.id, inputTypes.ATTRIBUTE)}
                   type="text" defaultValue={attr.title}
-                  placeholder="Введіть назву атрибута" />
+                  placeholder={inputField[location.pathname].rowsMain} />
               </div>)
           })
         }
@@ -60,7 +77,7 @@ function InputForm({ products, onRowAdd = f => f,
                     onBlur={(e)=>onInputBlur(e, value.id, inputTypes.TITLE)}
                     type="text"
                     defaultValue={value.title}
-                    placeholder="Введіть назву товару" />
+                    placeholder={inputField[location.pathname].colsMain}  />
               </div>
               <div className="start-form__value-body">
                   {
@@ -72,7 +89,7 @@ function InputForm({ products, onRowAdd = f => f,
                           key={prodVal.id}
                           type="text"
                           defaultValue={prodVal.value}
-                          placeholder="Введіть кількість"/>
+                          placeholder={inputField[location.pathname].intersection}/>
                       )
                     })
                   }

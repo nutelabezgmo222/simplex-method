@@ -1,16 +1,30 @@
 import React from 'react'
 import { checkForNumber } from '../features/features.js'
 import { inputTypes } from '../constants';
+import { useLocation } from 'react-router-dom';
+
+let inputField = {
+  "/": {
+    title: "Задайте тут обмеження по матеріалам",
+    nonActive: 'Будь ласка вкажіть назви для матеріалів',
+  },
+  "/transport": {
+    title: "Задайте тут запаси постачальників",
+    nonActive: 'Будь ласка вкажіть назви для постачальників'
+  }
+}
+
 
 function AttributesResctrictionForm({ attributes = [],onInputBlur=f=>f}) {
   let title;
   let activeAttributes = attributes.filter((attr) => attr.title.length && attr.id !== 0)
+  let location = useLocation();
   if (attributes.length === 1) {
     title = ''
   } else if (!activeAttributes.length) {
-    title = 'Будь ласка вкажіть назви для матеріалів'
+    title = inputField[location.pathname].nonActive
   } else {
-    title = 'Задайте тут обмеження по матеріалам'
+    title = inputField[location.pathname].title
   }
   
   return (
@@ -24,6 +38,7 @@ function AttributesResctrictionForm({ attributes = [],onInputBlur=f=>f}) {
             <input
               onBlur={(e) => onInputBlur(e, attr.id, inputTypes.ATTR_REST)}
               onChange={checkForNumber}
+              defaultValue={attr.restriction}
               type="text" />
           </div>)
       }
