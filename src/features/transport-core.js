@@ -337,7 +337,7 @@ class TransportCycle {
               row: i,
             };
           } else if (
-            this.pseudoTarriffs[i][j].val == minTarrif.val &&
+            this.pseudoTarriffs[i][j].val === minTarrif.val &&
             this.wayWeights[i][j] <
             this.wayWeights[minTarrif.row][minTarrif.col]
           ) {

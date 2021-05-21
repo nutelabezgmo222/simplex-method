@@ -31,6 +31,9 @@ function App() {
         setProdObject(transport);
         break;
       }
+      default: {
+        break;
+      }
     }
   }, [location.pathname]);
   
