@@ -15,6 +15,12 @@ let inputField = {
     rowsMain: "Введіть назву споживача",
     colsMain: "Введіть назву заводу",
     intersection: "Введіть вартість шляху"
+  },
+  "/destiny": {
+    rowsFirst: "",
+    rowsMain: "Введіть вид роботи",
+    colsMain: "Введіть виконавця",
+    intersection: "Введіть витрати"
   }
   
 }

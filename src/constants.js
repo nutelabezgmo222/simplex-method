@@ -15,35 +15,105 @@ export const products = {
     },
   ],
 };
-// export const transport = {
+export const destiny = {
+  attributes: [
+    {
+      id: 0,
+      title: "1",
+      restriction: 0,
+      meassurement: "",
+    },
+    {
+      id: 1,
+      title: "2",
+      restriction: 15,
+      meassurement: "",
+    },
+    {
+      id: 2,
+      title: "3",
+      restriction: 15,
+      meassurement: "",
+    },
+    {
+      id: 3,
+      title: "4",
+      restriction: 40,
+      meassurement: "",
+    },
+  ],
+  values: [
+    {
+      id: 0,
+      title: "1",
+      prodValues: [
+        { id: 0, value: 6 },
+        { id: 1, value: 6 },
+        { id: 2, value: 4 },
+        { id: 3, value: 5 },
+      ],
+    },
+    {
+      id: 1,
+      title: "2",
+      prodValues: [
+        { id: 0, value: 5 },
+        { id: 1, value: 1 },
+        { id: 2, value: 4 },
+        { id: 3, value: 2 },
+      ],
+    },
+    {
+      id: 2,
+      title: "3",
+      prodValues: [
+        { id: 0, value: 5 },
+        { id: 1, value: 2 },
+        { id: 2, value: 2 },
+        { id: 3, value: 8 },
+      ],
+    },
+    {
+      id: 3,
+      title: "4",
+      prodValues: [
+        { id: 0, value: 3 },
+        { id: 1, value: 7 },
+        { id: 2, value: 5 },
+        { id: 3, value: 3 },
+      ],
+    },
+  ],
+};
+// export const destiny = {
 //   attributes: [
 //     {
 //       id: 0,
-//       title: "Тут введіть потреби споживачів",
+//       title: "1",
 //       restriction: 0,
 //       meassurement: "",
 //     },
 //     {
 //       id: 1,
-//       title: "A1",
+//       title: "2",
 //       restriction: 15,
 //       meassurement: "",
 //     },
 //     {
 //       id: 2,
-//       title: "A2",
+//       title: "3",
 //       restriction: 15,
 //       meassurement: "",
 //     },
 //     {
 //       id: 3,
-//       title: "A3",
+//       title: "4",
 //       restriction: 40,
 //       meassurement: "",
 //     },
 //     {
 //       id: 4,
-//       title: "A4",
+//       title: "5",
 //       restriction: 30,
 //       meassurement: "",
 //     },
@@ -51,35 +121,57 @@ export const products = {
 //   values: [
 //     {
 //       id: 0,
-//       title: "B1",
+//       title: "1",
 //       prodValues: [
-//         { id: 0, value: 30 },
+//         { id: 0, value: 2 },
 //         { id: 1, value: 1 },
-//         { id: 2, value: 8 },
-//         { id: 3, value: 2 },
+//         { id: 2, value: 3 },
+//         { id: 3, value: 1 },
 //         { id: 4, value: 3 },
 //       ],
 //     },
 //     {
 //       id: 1,
-//       title: "B2",
+//       title: "2",
 //       prodValues: [
-//         { id: 0, value: 50 },
-//         { id: 1, value: 4 },
-//         { id: 2, value: 7 },
-//         { id: 3, value: 5 },
-//         { id: 4, value: 1 },
+//         { id: 0, value: 4 },
+//         { id: 1, value: 5 },
+//         { id: 2, value: 5 },
+//         { id: 3, value: 4 },
+//         { id: 4, value: 2 },
 //       ],
 //     },
 //     {
 //       id: 2,
-//       title: "B3",
+//       title: "3",
 //       prodValues: [
-//         { id: 0, value: 20 },
-//         { id: 1, value: 6 },
-//         { id: 2, value: 3 },
+//         { id: 0, value: 1 },
+//         { id: 1, value: 4 },
+//         { id: 2, value: 2 },
+//         { id: 3, value: 3 },
+//         { id: 4, value: 5 },
+//       ],
+//     },
+//     {
+//       id: 3,
+//       title: "4",
+//       prodValues: [
+//         { id: 0, value: 3 },
+//         { id: 1, value: 1 },
+//         { id: 2, value: 2 },
+//         { id: 3, value: 1 },
+//         { id: 4, value: 3 },
+//       ],
+//     },
+//     {
+//       id: 4,
+//       title: "5",
+//       prodValues: [
+//         { id: 0, value: 3 },
+//         { id: 1, value: 2 },
+//         { id: 2, value: 4 },
 //         { id: 3, value: 4 },
-//         { id: 4, value: 4 },
+//         { id: 4, value: 5 },
 //       ],
 //     },
 //   ],

@@ -217,7 +217,7 @@
   }
 }
 
-.transport-resulst {
+.transport-resulst, .destiny-result {
   font-size: 14px;
   table {
     border-collapse: collapse;
@@ -227,5 +227,13 @@
   }
   td {
     padding: 10px 20px;
+  }
+}
+
+.destiny-result  {
+  .active {
+    background-color: tomato;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
   }
 }

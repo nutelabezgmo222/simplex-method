@@ -8,17 +8,20 @@ import {
   ProductRestrictionForm,
   Result,
   TransportResults,
+  DestinyResult
 } from "./components";
-import { inputTypes, products, transport } from './constants';
+import { inputTypes, products, transport, destiny } from './constants';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import Simplex from './features/simplex-core.js';
 import Transport from "./features/transport-core.js";
+import Destiny from "./features/destiny-core.js";
 
 function App() {
   const [prodObject, setProdObject] = React.useState({});
   const [prodRestriction, setProdRestriction] = React.useState([]);
   const [result, setResult] = React.useState(null);
   const [transportResults, setTransportResults] = React.useState(null);
+  const [destinyResult, setDestinyResult] = React.useState(null);
   const location = useLocation();
 
   React.useEffect(() => {
@@ -29,6 +32,10 @@ function App() {
       }
       case "/transport": {
         setProdObject(transport);
+        break;
+      }
+      case "/destiny": {
+        setProdObject(destiny);
         break;
       }
       default: {
@@ -197,6 +204,14 @@ function App() {
     const transport = new Transport(prodObject);
     setTransportResults(transport.logArray);
   }
+  const handleDestinyCalc = () => {
+    const destiny = new Destiny(prodObject);
+    setDestinyResult({
+      startMatrix: destiny.startMatrix,
+      usedMatrix: destiny.usedMatrix,
+      matrix: destiny.matrix,
+    });
+  }
   return (
     <div className="app">
       <Header></Header>
@@ -210,23 +225,42 @@ function App() {
           onRowAdd={handleRowAdd}
           onRowRemove={handleRowRemove}
         />
-        <AttributesResctrictionForm
-          attributes={prodObject.attributes}
-          onInputBlur={onInputBlur}
-        />
         <Switch>
+          <Route path="/destiny" exact>
+            <div className="button-box">
+              <button onClick={handleDestinyCalc} className="main-button">
+                Рохрахувати
+              </button>
+            </div>
+            {destinyResult && (
+              <DestinyResult
+                prod={prodObject}
+                results={destinyResult}
+              ></DestinyResult>
+            )}
+          </Route>
           <Route path="/transport" exact>
+            <AttributesResctrictionForm
+              attributes={prodObject.attributes}
+              onInputBlur={onInputBlur}
+            />
             <div className="button-box">
               <button onClick={handleTransportCalc} className="main-button">
                 Рохрахувати
               </button>
             </div>
-            {
-              transportResults &&
-              <TransportResults prod={prodObject} results={transportResults}></TransportResults>
-            }
+            {transportResults && (
+              <TransportResults
+                prod={prodObject}
+                results={transportResults}
+              ></TransportResults>
+            )}
           </Route>
           <Route path="/">
+            <AttributesResctrictionForm
+              attributes={prodObject.attributes}
+              onInputBlur={onInputBlur}
+            />
             <ProductRestrictionForm
               products={prodObject.values}
               prodRestriction={prodRestriction}
